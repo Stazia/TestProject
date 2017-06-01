@@ -14,6 +14,11 @@ namespace TestProject
                 Console.WriteLine("Hei på deg!");
             }
 
+            if (line != null && line.Equals("Ha det", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine("Ha det bra!");
+            }
+
             Console.ReadLine();
         }
     }
