@@ -8,7 +8,12 @@ namespace TestProject
         {
             Console.WriteLine("Testing release notes");
             var line = Console.ReadLine();
-            Console.WriteLine("You have typed: " + line);
+
+            if (line != null && line.Equals("Hei", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine("Hei på deg!");
+            }
+
             Console.ReadLine();
         }
     }
