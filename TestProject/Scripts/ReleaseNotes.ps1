@@ -6,7 +6,7 @@ Param(
 )
 $f = "Release notes for build $(Build.BuildNumber) $(Build.BuildURI):"
 
-$tagsUri = $gApiUrl/tags
+$tagsUri = "$gApiUrl/tags"
 $gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $gToken"}
 Write-Host $gTags 
 
