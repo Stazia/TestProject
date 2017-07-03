@@ -4,7 +4,7 @@ Param(
 [string] $gProjectUrl,
 [string] $hookUri
 )
-$f = "Release notes for build $(Build.BuildNumber) $(Build.BuildURI):"
+$f = "Release notes for build $env:BUILD_BUILDNUMBER $env:BUILD_BUILDURI:"
 
 $tagsUri = "$gApiUrl/tags"
 $gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $gToken"}
