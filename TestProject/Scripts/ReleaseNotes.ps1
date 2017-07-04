@@ -7,6 +7,7 @@ Param(
 $f = "Release notes for build $env:BUILD_BUILDNUMBER $env:BUILD_BUILDURI :"
 
 $tagsUri = "$gApiUrl/tags"
+$lastVersions = @()
 $gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $gToken"}
 $gTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
 $latestVersion = $lastVersions[0]
