@@ -4,7 +4,7 @@ Param(
 [string] $gProjectUrl,
 [string] $sHookUri
 )
-$notes = "Release notes for build $env:BUILD_BUILDNUMBER $env:BUILD_BUILDURI :"
+$notes = "Release notes for build $env:BUILD_BUILDNUMBER :"
 
 $tagsUri = "$gApiUrl/tags"
 $lastVersions = @()
