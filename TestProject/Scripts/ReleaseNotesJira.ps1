@@ -2,8 +2,8 @@ Param(
 [string] $githubToken,
 [string] $githubApiUrl,
 [string] $jiraUser,
-[string] $jiraPassord,
-[string] $jiraUrl
+[string] $jiraPassword,
+[string] $jiraUrl,
 [string] $sHookUri
 )
 
