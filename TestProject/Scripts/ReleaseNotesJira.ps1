@@ -1,13 +1,13 @@
 Param(
 [string] $githubToken,
-[string] $gApiUrl,
+[string] $githubApiUrl,
 [string] $jiraUser,
 [string] $jiraPassord,
 [string] $jiraUrl
 [string] $sHookUri
 )
 
-$tagsUri = "$gApiUrl/tags"
+$tagsUri = "$githubApiUrl/tags"
 $lastVersions = @()
 $gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
 $gTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
