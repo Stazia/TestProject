@@ -1,13 +1,15 @@
 Param(
+[string] $githubToken,
+[string] $gApiUrl,
 [string] $jiraUser,
 [string] $jiraPassord,
-[string] $jiraProjectUrl
+[string] $jiraUrl
 [string] $sHookUri
 )
 
 $tagsUri = "$gApiUrl/tags"
 $lastVersions = @()
-$gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $gToken"}
+$gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
 $gTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
 $latestVersion = $lastVersions[0]
 $previousVersion = $lastVersions[1]
@@ -16,13 +18,13 @@ $notes = "Ny versjon av Stadnamn ($latestVersion) er ute i produksjon! `n Dette 
 
 git log "$previousVersion..$latestVersion" --extended-regexp --pretty=oneline --no-merges | Select-String -Pattern "STAD-[0-9]+" | ForEach {$_.Matches.Value.Trim("#")} | Select-Object -unique | ForEach {
 
-$jiraUrl = "https://nrknyemedier.atlassian.net/rest/api/latest/issue/$_"
+$jiraUrl = "$jiraUrl/rest/api/latest/issue/$_"
 $pair = "$($jiraUser):$($jiraPassord)"
 $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
 $headers = @{ Authorization = "Basic $encodedCreds" }
 $jiraIssue = Invoke-RestMethod -Method Get -Uri $jiraUrl -Header $headers
 $jiraSummary = $jiraIssue.fields.summary
-$line = "* [$_](https://nrknyemedier.atlassian.net/browse/$_) $jiraSummary"
+$line = "* [$_]($jiraUrl/browse/$_) $jiraSummary"
 
 $notes = "$notes `n $line"}
 Write-Host $notes
