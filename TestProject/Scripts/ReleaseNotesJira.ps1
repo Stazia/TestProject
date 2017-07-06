@@ -9,8 +9,8 @@ Param(
 
 $tagsUri = "$githubApiUrl/tags"
 $lastVersions = @()
-$gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
-$gTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
+$githubTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
+$githubTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
 $latestVersion = $lastVersions[0]
 $previousVersion = $lastVersions[1]
 
