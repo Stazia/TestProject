@@ -4,7 +4,7 @@ Param(
 [string] $jiraUser,
 [string] $jiraPassword,
 [string] $jiraUrl,
-[string] $sHookUri
+[string] $slackHookUri
 )
 
 $tagsUri = "$githubApiUrl/tags"
@@ -30,4 +30,4 @@ $notes = "$notes `n $line"}
 Write-Host $notes
 
 $slackMessage = @{ "text" = $notes } | ConvertTo-Json -Compress
-Invoke-WebRequest -UseBasicParsing -Body $slackMessage -Method POST -Uri $sHookUri
+Invoke-WebRequest -UseBasicParsing -Body $slackMessage -Method POST -Uri $slackHookUri
