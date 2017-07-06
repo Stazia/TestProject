@@ -18,11 +18,11 @@ $notes = "Ny versjon av Stadnamn ($latestVersion) er ute i produksjon! `n Dette 
 
 git log "$previousVersion..$latestVersion" --extended-regexp --pretty=oneline --no-merges | Select-String -Pattern "STAD-[0-9]+" | ForEach {$_.Matches.Value.Trim("#")} | Select-Object -unique | ForEach {
 
-$jiraUrl = "$jiraUrl/rest/api/latest/issue/$_"
+$jiraApiUrl = "$jiraUrl/rest/api/latest/issue/$_"
 $pair = "$($jiraUser):$($jiraPassord)"
 $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
 $headers = @{ Authorization = "Basic $encodedCreds" }
-$jiraIssue = Invoke-RestMethod -Method Get -Uri $jiraUrl -Header $headers
+$jiraIssue = Invoke-RestMethod -Method Get -Uri $jiraApiUrl -Header $headers
 $jiraSummary = $jiraIssue.fields.summary
 $line = "* [$_]($jiraUrl/browse/$_) $jiraSummary"
 
