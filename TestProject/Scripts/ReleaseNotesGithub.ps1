@@ -1,11 +1,11 @@
 Param(
 [string] $githubToken,
-[string] $githubApiUrl,
-[string] $githubProjectUrl,
-[string] $sHookUri
+[string] $githubApiUri,
+[string] $githubProjectUri,
+[string] $slackHookUri
 )
 
-$tagsUri = "$githubApiUrl/tags"
+$tagsUri = "$githubApiUri/tags"
 $lastVersions = @()
 $gTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
 $gTags | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
@@ -15,12 +15,12 @@ $previousVersion = $lastVersions[1]
 $notes = "Ny versjon av Stadnamn ($latestVersion) er ute i produksjon! `n Dette er fikset siden sist:"
 
 git log "$previousVersion..$latestVersion" --extended-regexp --pretty=oneline --no-merges | Select-String -Pattern "#[0-9]+" | ForEach {$_.Matches.Value.Trim("#")} | Select-Object -unique | ForEach {
-$gUrl = "$githubApiUrl/issues/$_"
+$gUrl = "$githubApiUri/issues/$_"
 $item = Invoke-RestMethod -Method Get -Uri $gUrl -Header @{Authorization = "token $githubToken"}
 $title = $item.title
-$line = "* Issue $_ ($githubProjectUrl/issues/$_) $title" 
+$line = "* Issue $_ ($githubProjectUri/issues/$_) $title" 
 $notes = "$notes `n $line"}
 Write-Host $notes
 
 $slackMessage = @{ "text" = $notes } | ConvertTo-Json -Compress
-Invoke-WebRequest -UseBasicParsing -Body $slackMessage -Method POST -Uri $sHookUri
+Invoke-WebRequest -UseBasicParsing -Body $slackMessage -Method POST -Uri $slackHookUri
