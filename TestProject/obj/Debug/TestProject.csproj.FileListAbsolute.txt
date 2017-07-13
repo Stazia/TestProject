@@ -4,3 +4,4 @@ C:\NRK\Git\TestProject\TestProject\bin\Debug\TestProject.pdb
 C:\NRK\Git\TestProject\TestProject\obj\Debug\TestProject.csprojResolveAssemblyReference.cache
 C:\NRK\Git\TestProject\TestProject\obj\Debug\TestProject.exe
 C:\NRK\Git\TestProject\TestProject\obj\Debug\TestProject.pdb
+C:\NRK\Git\TestProject\TestProject\bin\Debug\Scripts\ReleaseNotesGithub.ps1
