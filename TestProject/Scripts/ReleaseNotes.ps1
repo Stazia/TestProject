@@ -1,7 +1,7 @@
 Param(
 [string] $githubToken,
 [string] $githubApiUrl,
-[string] $gProjectUrl,
+[string] $githubProjectUrl,
 [string] $sHookUri
 )
 
@@ -18,7 +18,7 @@ git log "$previousVersion..$latestVersion" --extended-regexp --pretty=oneline --
 $gUrl = "$githubApiUrl/issues/$_"
 $item = Invoke-RestMethod -Method Get -Uri $gUrl -Header @{Authorization = "token $githubToken"}
 $title = $item.title
-$line = "* Issue $_ ($gProjectUrl/issues/$_) $title" 
+$line = "* Issue $_ ($githubProjectUrl/issues/$_) $title" 
 $notes = "$notes `n $line"}
 Write-Host $notes
 
