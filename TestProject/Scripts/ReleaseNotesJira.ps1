@@ -19,7 +19,7 @@ $notes = "Ny versjon av Stadnamn ($latestVersion) er ute i produksjon! `n Dette 
 git log "$previousVersion..$latestVersion" --extended-regexp --pretty=oneline --no-merges | Select-String -Pattern "STAD-[0-9]+" | ForEach {$_.Matches.Value.Trim("#")} | Select-Object -unique | ForEach {
 
 $jiraApiUri = "$jiraUri/rest/api/latest/issue/$_"
-$pair = "${jiraUser}:${jiraPassord}"
+$pair = "${$jiraUser}:${$jiraPassword}"
 $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
 $headers = @{ Authorization = "Basic $encodedCreds" }
 $jiraIssue = Invoke-RestMethod -Method Get -Uri $jiraApiUri -Header $headers
