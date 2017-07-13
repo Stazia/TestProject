@@ -24,6 +24,11 @@ namespace TestProject
                 Console.WriteLine("Ja, det er fint vær i dag!");
             }
 
+            if (line != null && line.Contains("Går det bra?"))
+            {
+                Console.WriteLine("Ja!");
+            }
+
             Console.ReadLine();
         }
     }
