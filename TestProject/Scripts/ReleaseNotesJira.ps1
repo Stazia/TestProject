@@ -4,13 +4,14 @@ Param(
 [string] $jiraUser,
 [string] $jiraPassword,
 [string] $jiraUri,
-[string] $slackHookUri
+[string] $slackHookUri,
+[string] $releaseName
 )
 
 $tagsUri = "$githubApiUri/tags"
 $lastVersions = @()
 $githubTags = Invoke-RestMethod -Method Get -Uri $tagsUri -Header @{Authorization = "token $githubToken"}
-$githubTags | Where {$_.name -CLike "web-*"} | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
+$githubTags | Where {$_.name -CLike "$releaseName-v*"} | Select-Object -first 2 | ForEach {$lastVersions = $lastVersions+$_.name}
 $latestVersion = $lastVersions[0]
 $previousVersion = $lastVersions[1]
 
