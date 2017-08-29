@@ -32,3 +32,8 @@ Write-Host $notes
 
 $slackMessage = @{ "text" = $notes } | ConvertTo-Json -Compress
 Invoke-WebRequest -UseBasicParsing -Body $slackMessage -Method POST -Uri $slackHookUri
+
+$messages = '-m ""'
+$notes | Foreach-Object { $m = ' -m ' + '"' + $_ + '"' ; $messages = $messages + $m }
+
+
